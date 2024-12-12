@@ -49,19 +49,28 @@ public class ScaleParameter {
         return ScaleParam;
     }
 
-    public Long getOrder() {
-        return param_order;
-    }
-
     public void setScaleEvParam(EvaluationParameter scaleEvParam) {
         ScaleEvParam = scaleEvParam;
     }
 
-    public void setOrder(Long order) {
-        this.param_order = order;
-    }
 
     public void setScaleParam(EvaluationScale scaleParam) {
         ScaleParam = scaleParam;
+    }
+
+    public void setSurveyResults(List<SurveyResult> surveyResults) {
+        this.surveyResults = surveyResults;
+    }
+
+    public List<SurveyResult> getSurveyResults() {
+        return surveyResults;
+    }
+
+    public Long getParam_order() {
+        return param_order;
+    }
+
+    public void setParam_order(Long param_order) {
+        this.param_order = param_order;
     }
 }

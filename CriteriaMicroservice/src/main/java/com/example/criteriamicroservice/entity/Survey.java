@@ -27,6 +27,10 @@ public class Survey {
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SurveyQuestion> questions;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SurveyResult> results;
+
     public Long getId() {
         return id;
     }
@@ -65,5 +69,13 @@ public class Survey {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<SurveyResult> getResults() {
+        return results;
+    }
+
+    public void setResults(List<SurveyResult> results) {
+        this.results = results;
     }
 }
