@@ -21,7 +21,7 @@ public interface CriteriaDirectoryService {
     List<CriteriaDirectory> findByCombined(EvaluationScale evaluationScale, LifecycleStage lifecycleStage, CriteriaType criteriaType);
     CriteriaDirectory findCriteriaDirectoryById(Long id);
     CriteriaDirectory updateCriteriaDirectory(CriteriaDirectory criteriaDirectory, Long id);
-    void deleteCriteriaDirectory(CriteriaDirectory criteriaDirectory);
+    void deleteCriteriaDirectory(Long id);
     void loadFromCsv(MultipartFile file) throws Exception;
 
     byte[] exportToCsv() throws Exception;

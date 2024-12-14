@@ -1,5 +1,6 @@
 package com.example.criteriamicroservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,11 +20,13 @@ public class EvaluationScale {
     private Long id;
     @Column(unique=true, nullable = false)
     private String name;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "CriterionScale", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JsonManagedReference(value = "scale-reference")
+    @OneToMany(mappedBy = "criterionScale", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CriteriaDirectory> criteriaDirectories;
+    @JsonIgnore
     @JsonManagedReference
-    @OneToMany(mappedBy = "ScaleParam", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "scaleParam", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ScaleParameter> scaleParameters;
 
     public void setId(Long id) {

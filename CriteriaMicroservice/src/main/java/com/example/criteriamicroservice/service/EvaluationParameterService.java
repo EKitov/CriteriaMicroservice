@@ -9,5 +9,5 @@ public interface EvaluationParameterService {
     List<EvaluationParameter> fetchEvaluationParameterList();
     EvaluationParameter findEvaluationParameterById(Long id);
     EvaluationParameter updateEvaluationParameter(EvaluationParameter evaluationParameter, Long id);
-    void deleteEvaluationParameter(EvaluationParameter evaluationParameter);
+    void deleteEvaluationParameter(Long id);
 }

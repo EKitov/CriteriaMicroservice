@@ -1,7 +1,6 @@
 package com.example.criteriamicroservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,20 +24,21 @@ public class CriteriaDirectory {
     private Double weight;
     @Column(nullable = false)
     private String shortname;
-    @JsonBackReference
+    @JsonIgnoreProperties(value = "type-reference")
     @ManyToOne
     @JoinColumn(name = "type_id", nullable = false)
-    private CriteriaType CriterionType;
-    @JsonBackReference
+    private CriteriaType criterionType;
+    @JsonIgnoreProperties(value = "stage-reference")
     @ManyToOne
     @JoinColumn(name = "lifecycle_stage_id", nullable = false)
-    private LifecycleStage CriterionStage;
-    @JsonBackReference
+    private LifecycleStage criterionStage;
+    @JsonIgnoreProperties(value = "scale-reference")
     @ManyToOne
     @JoinColumn(name = "scale_id", nullable = false)
-    private EvaluationScale CriterionScale;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "CriterionDirectory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private EvaluationScale criterionScale;
+    @JsonIgnore
+    @JsonManagedReference("criteria-reference")
+    @OneToMany(mappedBy = "criterionDirectory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Criteria> criteria;
 
     public List<Criteria> getCriteria() {
@@ -58,7 +58,7 @@ public class CriteriaDirectory {
     }
 
     public CriteriaType getCriterionType() {
-        return CriterionType;
+        return criterionType;
     }
 
     public Double getWeight() {
@@ -66,11 +66,11 @@ public class CriteriaDirectory {
     }
 
     public EvaluationScale getCriterionScale() {
-        return CriterionScale;
+        return criterionScale;
     }
 
     public LifecycleStage getCriterionStage() {
-        return CriterionStage;
+        return criterionStage;
     }
 
     public String getFormulation() {
@@ -82,15 +82,15 @@ public class CriteriaDirectory {
     }
 
     public void setCriterionScale(EvaluationScale criterionScale) {
-        CriterionScale = criterionScale;
+        this.criterionScale = criterionScale;
     }
 
     public void setCriterionStage(LifecycleStage criterionStage) {
-        CriterionStage = criterionStage;
+        this.criterionStage = criterionStage;
     }
 
     public void setCriterionType(CriteriaType criterionType) {
-        CriterionType = criterionType;
+        this.criterionType = criterionType;
     }
 
     public void setFormulation(String formulation) {

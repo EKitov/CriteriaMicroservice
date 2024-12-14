@@ -14,5 +14,5 @@ public interface ScaleParameterService {
     List<ScaleParameter> findByScaleAndParameter(EvaluationScale scaleParam, EvaluationParameter parameter);
     ScaleParameter findScaleParameterById(Long id);
     ScaleParameter updateScaleParameter(ScaleParameter scaleParameter, Long id);
-    void deleteScaleParameter(ScaleParameter scaleParameter);
+    void deleteScaleParameter(Long id);
 }

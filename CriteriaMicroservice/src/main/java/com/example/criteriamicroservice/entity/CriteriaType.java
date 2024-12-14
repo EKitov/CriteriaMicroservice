@@ -1,5 +1,6 @@
 package com.example.criteriamicroservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,8 +21,9 @@ public class CriteriaType {
     private Long id;
     @Column(unique=true, nullable = false)
     private String name;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "CriterionType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JsonManagedReference(value = "type-reference")
+    @OneToMany(mappedBy = "criterionType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CriteriaDirectory> criteriaDirectories;
 
     public void setName(String name) {

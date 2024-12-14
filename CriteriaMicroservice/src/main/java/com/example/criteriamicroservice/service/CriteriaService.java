@@ -13,7 +13,7 @@ public interface CriteriaService {
     List<Criteria> findByCriteriaDirectory(CriteriaDirectory criteriaDirectory);
     Criteria findCriteriaById(Long id);
     Criteria updateCriteria(Criteria criteria, Long id);
-    void deleteCriteria(Criteria criteria);
+    void deleteCriteria(Long id);
     void uploadCriteriaFromCsv(InputStream csvInputStream);
 
     void downloadCriteriaToCsv(Writer writer);

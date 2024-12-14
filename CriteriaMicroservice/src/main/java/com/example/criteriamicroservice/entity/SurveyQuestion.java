@@ -1,8 +1,13 @@
 package com.example.criteriamicroservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "survey_question", uniqueConstraints = {@UniqueConstraint(columnNames = {"survey_id", "criteria_id", "questionOrder" })})
@@ -15,19 +20,21 @@ public class SurveyQuestion {
     @Column(unique=true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @JsonBackReference
+    @JsonIgnoreProperties
     @ManyToOne
     @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
-
-    @JsonBackReference
+    @JsonIgnoreProperties
     @ManyToOne
     @JoinColumn(name = "criteria_id", nullable = false)
     private Criteria criteria;
     @Column(nullable = false)
     private Integer questionOrder; // Порядок вопроса в опроснике
     private String additionalDetails; // Дополнительная информация о вопросе (опционально)
+    @JsonIgnore
+    @JsonManagedReference
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SurveyResult> results;
 
     public void setId(Long id) {
         this.id = id;
@@ -59,6 +66,14 @@ public class SurveyQuestion {
 
     public Integer getQuestionOrder() {
         return questionOrder;
+    }
+
+    public List<SurveyResult> getResults() {
+        return results;
+    }
+
+    public void setResults(List<SurveyResult> results) {
+        this.results = results;
     }
 
     public Criteria getCriteria() {

@@ -1,5 +1,6 @@
 package com.example.criteriamicroservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,7 +27,7 @@ public class Respondent {
     private String department;
     @Column(nullable = false)
     private String position;
-
+    @JsonIgnore
     @JsonManagedReference
     @OneToMany(mappedBy = "respondent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SurveyResult> surveyResults;

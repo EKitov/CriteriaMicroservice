@@ -72,7 +72,7 @@ public class ScaleParameterServiceImpl implements ScaleParameterService {
     }
 
     @Override
-    public void deleteScaleParameter(ScaleParameter scaleParameter) {
-        scaleParameterRepository.delete(scaleParameter);
+    public void deleteScaleParameter(Long id) {
+        scaleParameterRepository.deleteById(id);
     }
 }

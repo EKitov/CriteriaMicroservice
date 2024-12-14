@@ -9,5 +9,5 @@ public interface LifecycleStageService {
     List<LifecycleStage> fetchLifecycleStageList();
     LifecycleStage findLifecycleStageById(Long id);
     LifecycleStage updateLifecycleStage(LifecycleStage lifecycleStage, Long id);
-    void deleteLifecycleStage(LifecycleStage lifecycleStage);
+    void deleteLifecycleStage(Long id);
 }

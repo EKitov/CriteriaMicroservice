@@ -2,6 +2,9 @@ package com.example.criteriamicroservice.controller;
 
 import com.example.criteriamicroservice.entity.*;
 import com.example.criteriamicroservice.service.CriteriaDirectoryService;
+import com.example.criteriamicroservice.service.CriteriaTypeService;
+import com.example.criteriamicroservice.service.EvaluationScaleService;
+import com.example.criteriamicroservice.service.LifecycleStageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,12 @@ import java.util.List;
 public class CriteriaDirectoryController {
     @Autowired
     private CriteriaDirectoryService criteriaDirectoryService;
+    @Autowired
+    private EvaluationScaleService evaluationScaleService;
+    @Autowired
+    private CriteriaTypeService criteriaTypeService;
+    @Autowired
+    private LifecycleStageService lifecycleStageService;
     @PostMapping("/criteriaDirectories")
     public CriteriaDirectory saveCriteriaDirectory(@RequestBody CriteriaDirectory criteriaDirectory)
     {
@@ -31,50 +40,41 @@ public class CriteriaDirectoryController {
     }
     @GetMapping("/criteriaDirectoriesByScale/{scaleId}")
     public List<CriteriaDirectory> findByEvaluationScale(@PathVariable Long scaleId) {
-        EvaluationScale scale = new EvaluationScale();
-        scale.setId(scaleId);
+        EvaluationScale scale = evaluationScaleService.findEvaluationScaleById(scaleId);
         return criteriaDirectoryService.findByEvaluationScale(scale);
     }
     @GetMapping("/criteriaDirectoriesByCriteriaType/{typeID}")
     public List<CriteriaDirectory> findByCriteriaType(@PathVariable Long typeID) {
-        CriteriaType criteriaType = new CriteriaType();
-        criteriaType.setId(typeID);
+        CriteriaType criteriaType = criteriaTypeService.findCriteriaTypeById(typeID);
         return criteriaDirectoryService.findByCriteriaType(criteriaType);
     }
     @GetMapping("/criteriaDirectoriesByLifecycleStage/{stageID}")
     public List<CriteriaDirectory> findByLifecycleStage(@PathVariable Long stageID) {
-       LifecycleStage lifecycleStage = new LifecycleStage();
-       lifecycleStage.setId(stageID);
+       LifecycleStage lifecycleStage = lifecycleStageService.findLifecycleStageById(stageID);
         return criteriaDirectoryService.findByLifecycleStage(lifecycleStage);
     }
     @GetMapping("/criteriaDirectoriesByScaleAndType")
     public List<CriteriaDirectory> findByScaleAndType(
             @RequestParam Long scaleId,
             @RequestParam Long typeID) {
-        EvaluationScale scale = new EvaluationScale();
-        scale.setId(scaleId);
-        CriteriaType criteriaType = new CriteriaType();
-        criteriaType.setId(typeID);
+        EvaluationScale scale = evaluationScaleService.findEvaluationScaleById(scaleId);
+        CriteriaType criteriaType = criteriaTypeService.findCriteriaTypeById(typeID);
         return criteriaDirectoryService.findByScaleAndType(scale, criteriaType);
     }
     @GetMapping("/criteriaDirectoriesByScaleAndStage")
     public List<CriteriaDirectory> findByScaleAndStage(
             @RequestParam Long scaleId,
             @RequestParam Long stageID) {
-        EvaluationScale scale = new EvaluationScale();
-        scale.setId(scaleId);
-        LifecycleStage lifecycleStage = new LifecycleStage();
-        lifecycleStage.setId(stageID);
+        EvaluationScale scale = evaluationScaleService.findEvaluationScaleById(scaleId);
+        LifecycleStage lifecycleStage = lifecycleStageService.findLifecycleStageById(stageID);
         return criteriaDirectoryService.findByScaleAndStage(scale, lifecycleStage);
     }
     @GetMapping("/criteriaDirectoriesByTypeAndStage")
     public List<CriteriaDirectory> findByTypeAndStage(
             @RequestParam Long typeID,
             @RequestParam Long stageID) {
-        CriteriaType criteriaType = new CriteriaType();
-        criteriaType.setId(typeID);
-        LifecycleStage lifecycleStage = new LifecycleStage();
-        lifecycleStage.setId(stageID);
+        CriteriaType criteriaType = criteriaTypeService.findCriteriaTypeById(typeID);
+        LifecycleStage lifecycleStage = lifecycleStageService.findLifecycleStageById(stageID);
         return criteriaDirectoryService.findByTypeAndStage(criteriaType, lifecycleStage);
     }
     @GetMapping("/criteriaDirectoriesByCombined")
@@ -82,12 +82,9 @@ public class CriteriaDirectoryController {
             @RequestParam Long scaleId,
             @RequestParam Long typeID,
             @RequestParam Long stageID) {
-        EvaluationScale scale = new EvaluationScale();
-        scale.setId(scaleId);
-        CriteriaType criteriaType = new CriteriaType();
-        criteriaType.setId(typeID);
-        LifecycleStage lifecycleStage = new LifecycleStage();
-        lifecycleStage.setId(stageID);
+        EvaluationScale scale = evaluationScaleService.findEvaluationScaleById(scaleId);
+        CriteriaType criteriaType = criteriaTypeService.findCriteriaTypeById(typeID);
+        LifecycleStage lifecycleStage = lifecycleStageService.findLifecycleStageById(stageID);
         return criteriaDirectoryService.findByCombined(scale, lifecycleStage, criteriaType);
     }
     // Update operation
@@ -97,11 +94,10 @@ public class CriteriaDirectoryController {
         return criteriaDirectoryService.updateCriteriaDirectory(criteriaDirectory, ID);
     }
     // Delete operation
-    @DeleteMapping("/criteriaDirectories")
+    @DeleteMapping("/criteriaDirectories/{id}")
     public String deleteScaleParameter(@PathVariable("id") Long ID)
     {
-        CriteriaDirectory criteriaDirectory = criteriaDirectoryService.findCriteriaDirectoryById(ID);
-        criteriaDirectoryService.deleteCriteriaDirectory(criteriaDirectory);
+        criteriaDirectoryService.deleteCriteriaDirectory(ID);
         return "Deleted Successfully";
     }
     @PostMapping("/criteriaDirectories/uploadCsv")

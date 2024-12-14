@@ -1,6 +1,8 @@
 package com.example.criteriamicroservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,10 +27,11 @@ public class Criteria {
     private String name;
     @Column(nullable = false)
     private String value;
-    @JsonBackReference
+    @JsonIgnoreProperties("surveyQuestion")
     @ManyToOne
     @JoinColumn(name = "directory_id", nullable = false)
-    private CriteriaDirectory CriterionDirectory;
+    private CriteriaDirectory criterionDirectory;
+    @JsonIgnore
     @JsonManagedReference
     @OneToMany(mappedBy = "criteria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SurveyQuestion> questions;
@@ -57,11 +60,11 @@ public class Criteria {
     }
 
     public CriteriaDirectory getCriterionDirectory() {
-        return CriterionDirectory;
+        return criterionDirectory;
     }
 
     public void setCriterionDirectory(CriteriaDirectory criterionDirectory) {
-        CriterionDirectory = criterionDirectory;
+        this.criterionDirectory = criterionDirectory;
     }
 
     public void setQuestions(List<SurveyQuestion> questions) {

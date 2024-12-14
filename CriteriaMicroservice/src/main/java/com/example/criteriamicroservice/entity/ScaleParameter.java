@@ -1,6 +1,8 @@
 package com.example.criteriamicroservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,14 +23,15 @@ public class ScaleParameter {
     private Long id;
     @Column(nullable = false)
     private Long param_order;
-    @JsonBackReference
+    @JsonIgnoreProperties
     @ManyToOne
     @JoinColumn(name = "scale_id", nullable = false)
-    private EvaluationScale ScaleParam;
-    @JsonBackReference
+    private EvaluationScale scaleParam;
+    @JsonIgnoreProperties
     @ManyToOne
     @JoinColumn(name = "parameter_id", nullable = false)
-    private EvaluationParameter ScaleEvParam;
+    private EvaluationParameter scaleEvParam;
+    @JsonIgnore
     @JsonManagedReference
     @OneToMany(mappedBy = "selectedParameter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SurveyResult> surveyResults;
@@ -42,20 +45,20 @@ public class ScaleParameter {
     }
 
     public EvaluationParameter getScaleEvParam() {
-        return ScaleEvParam;
+        return scaleEvParam;
     }
 
     public EvaluationScale getScaleParam() {
-        return ScaleParam;
+        return scaleParam;
     }
 
     public void setScaleEvParam(EvaluationParameter scaleEvParam) {
-        ScaleEvParam = scaleEvParam;
+        this.scaleEvParam = scaleEvParam;
     }
 
 
     public void setScaleParam(EvaluationScale scaleParam) {
-        ScaleParam = scaleParam;
+        this.scaleParam = scaleParam;
     }
 
     public void setSurveyResults(List<SurveyResult> surveyResults) {

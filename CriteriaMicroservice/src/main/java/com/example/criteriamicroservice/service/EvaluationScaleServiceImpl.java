@@ -45,7 +45,7 @@ public class EvaluationScaleServiceImpl implements EvaluationScaleService {
     }
 
     @Override
-    public void deleteEvaluationScale(EvaluationScale evaluationScale) {
-        evaluationScaleRepository.delete(evaluationScale);
+    public void deleteEvaluationScale(Long id) {
+        evaluationScaleRepository.deleteById(id);
     }
 }

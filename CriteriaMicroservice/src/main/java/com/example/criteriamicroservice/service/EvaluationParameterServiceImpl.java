@@ -43,7 +43,7 @@ public class EvaluationParameterServiceImpl implements EvaluationParameterServic
     }
 
     @Override
-    public void deleteEvaluationParameter(EvaluationParameter evaluationParameter) {
-        evaluationParameterRepository.delete(evaluationParameter);
+    public void deleteEvaluationParameter(Long id) {
+        evaluationParameterRepository.deleteById(id);
     }
 }

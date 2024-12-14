@@ -32,11 +32,10 @@ public class CriteriaTypeController {
         return criteriaTypeService.updateCriteriaType(criteriaType, ID);
     }
     // Delete operation
-    @DeleteMapping("/criteriaTypes")
+    @DeleteMapping("/criteriaTypes/{id}")
     public String deleteCriteriaTypeById(@PathVariable("id") Long ID)
     {
-        CriteriaType criteriaType = criteriaTypeService.findCriteriaTypeById(ID);
-        criteriaTypeService.deleteCriteriaType(criteriaType);
+        criteriaTypeService.deleteCriteriaType(ID);
         return "Deleted Successfully";
     }
 }

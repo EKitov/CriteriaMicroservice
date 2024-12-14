@@ -33,11 +33,10 @@ public class EvaluationScaleController {
         return evaluationScaleService.updateEvaluationScale(evaluationScale, ID);
     }
     // Delete operation
-    @DeleteMapping("/evaluationScales")
+    @DeleteMapping("/evaluationScales/{id}")
     public String deleteEvaluationScale(@PathVariable("id") Long ID)
     {
-        EvaluationScale evaluationScale = evaluationScaleService.findEvaluationScaleById(ID);
-        evaluationScaleService.deleteEvaluationScale(evaluationScale);
+        evaluationScaleService.deleteEvaluationScale(ID);
         return "Deleted Successfully";
     }
 }

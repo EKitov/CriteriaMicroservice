@@ -1,6 +1,7 @@
 package com.example.criteriamicroservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,29 +17,30 @@ public class SurveyResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonBackReference
+    @JsonIgnoreProperties
     @ManyToOne
     @JoinColumn(name = "respondent_id", nullable = false)
     private Respondent respondent;
 
 
-    @JsonBackReference
+    @JsonIgnoreProperties
     @ManyToOne
     @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
 
 
-    @JsonBackReference
+    @JsonIgnoreProperties
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
     private SurveyQuestion question;
 
-    @JsonBackReference
+    @JsonIgnoreProperties
     @ManyToOne
     @JoinColumn(name = "scale_parameter_id", nullable = false)
     private ScaleParameter selectedParameter; // Ответ — это параметр из шкалы
 
     private Boolean inProgress; // Флаг для отслеживания завершения опроса
+    private String verdict;
 
     public Survey getSurvey() {
         return survey;
@@ -50,6 +52,14 @@ public class SurveyResult {
 
     public Long getId() {
         return id;
+    }
+
+    public String getVerdict() {
+        return verdict;
+    }
+
+    public void setVerdict(String verdict) {
+        this.verdict = verdict;
     }
 
     public void setId(Long id) {

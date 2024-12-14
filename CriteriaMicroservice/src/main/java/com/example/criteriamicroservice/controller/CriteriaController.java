@@ -1,6 +1,7 @@
 package com.example.criteriamicroservice.controller;
 
 import com.example.criteriamicroservice.entity.*;
+import com.example.criteriamicroservice.service.CriteriaDirectoryService;
 import com.example.criteriamicroservice.service.CriteriaService;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
@@ -23,6 +24,8 @@ import java.util.List;
 public class CriteriaController {
     @Autowired
     private CriteriaService criteriaService;
+    @Autowired
+    private CriteriaDirectoryService criteriaDirectoryService;
     @PostMapping("/criterion")
     public Criteria saveCriteria(@RequestBody Criteria criteria)
     {
@@ -37,10 +40,9 @@ public class CriteriaController {
     public Criteria findCriteriaById(@PathVariable("id") Long id) {
         return criteriaService.findCriteriaById(id);
     }
-    @GetMapping("/criterion/{directoryId}")
+    @GetMapping("/criterionByDirectory/{directoryId}")
     public List<Criteria> findByDirectory(@PathVariable Long directoryId) {
-        CriteriaDirectory criteriaDirectory = new CriteriaDirectory();
-        criteriaDirectory.setId(directoryId);
+        CriteriaDirectory criteriaDirectory = criteriaDirectoryService.findCriteriaDirectoryById(directoryId);
         return criteriaService.findByCriteriaDirectory(criteriaDirectory);
     }
     // Update operation
@@ -50,11 +52,10 @@ public class CriteriaController {
         return criteriaService.updateCriteria(criteria, ID);
     }
     // Delete operation
-    @DeleteMapping("/criterion")
+    @DeleteMapping("/criterion/{id}")
     public String deleteScaleParameter(@PathVariable("id") Long ID)
     {
-        Criteria criteria = criteriaService.findCriteriaById(ID);
-        criteriaService.deleteCriteria(criteria);
+        criteriaService.deleteCriteria(ID);
         return "Deleted Successfully";
     }
     @PostMapping("/criterion/upload")

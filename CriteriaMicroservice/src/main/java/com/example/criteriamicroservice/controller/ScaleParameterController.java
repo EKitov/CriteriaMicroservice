@@ -3,6 +3,8 @@ package com.example.criteriamicroservice.controller;
 import com.example.criteriamicroservice.entity.EvaluationParameter;
 import com.example.criteriamicroservice.entity.EvaluationScale;
 import com.example.criteriamicroservice.entity.ScaleParameter;
+import com.example.criteriamicroservice.service.EvaluationParameterService;
+import com.example.criteriamicroservice.service.EvaluationScaleService;
 import com.example.criteriamicroservice.service.ScaleParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,10 @@ import java.util.List;
 public class ScaleParameterController {
     @Autowired
     private ScaleParameterService scaleParameterService;
+    @Autowired
+    private EvaluationScaleService evaluationScaleService;
+    @Autowired
+    private EvaluationParameterService evaluationParameterService;
     @PostMapping("/scaleParameters")
     public ScaleParameter saveScaleParameter(@RequestBody ScaleParameter scaleParameter)
     {
@@ -29,24 +35,20 @@ public class ScaleParameterController {
     }
     @GetMapping("/scaleParametersByScale/{scaleId}")
     public List<ScaleParameter> findByEvaluationScale(@PathVariable Long scaleId) {
-        EvaluationScale scale = new EvaluationScale();
-        scale.setId(scaleId);
+        EvaluationScale scale = evaluationScaleService.findEvaluationScaleById(scaleId);
         return scaleParameterService.findByEvaluationScale(scale);
     }
     @GetMapping("/scaleParametersByParam/{parameterId}")
     public List<ScaleParameter> getByParameter(@PathVariable Long parameterId) {
-        EvaluationParameter parameter = new EvaluationParameter();
-        parameter.setId(parameterId);
+        EvaluationParameter parameter = evaluationParameterService.findEvaluationParameterById(parameterId);
         return scaleParameterService.findByEvaluationParameter(parameter);
     }
     @GetMapping("/scaleParametersByScaleAndParameter")
     public List<ScaleParameter> getByScaleAndParameter(
             @RequestParam Long scaleId,
             @RequestParam Long parameterId) {
-        EvaluationScale scale = new EvaluationScale();
-        scale.setId(scaleId);
-        EvaluationParameter parameter = new EvaluationParameter();
-        parameter.setId(parameterId);
+        EvaluationScale scale = evaluationScaleService.findEvaluationScaleById(scaleId);
+        EvaluationParameter parameter = evaluationParameterService.findEvaluationParameterById(parameterId);
         return scaleParameterService.findByScaleAndParameter(scale, parameter);
     }
     // Update operation
@@ -56,11 +58,10 @@ public class ScaleParameterController {
         return scaleParameterService.updateScaleParameter(scaleParameter, ID);
     }
     // Delete operation
-    @DeleteMapping("/scaleParameters")
+    @DeleteMapping("/scaleParameters/{id}")
     public String deleteScaleParameter(@PathVariable("id") Long ID)
     {
-        ScaleParameter scaleParameter = scaleParameterService.findScaleParameterById(ID);
-        scaleParameterService.deleteScaleParameter(scaleParameter);
+        scaleParameterService.deleteScaleParameter(ID);
         return "Deleted Successfully";
     }
 }

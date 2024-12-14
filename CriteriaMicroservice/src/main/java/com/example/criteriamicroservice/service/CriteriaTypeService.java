@@ -9,5 +9,5 @@ public interface CriteriaTypeService {
     List<CriteriaType> fetchCriteriaTypeList();
     CriteriaType findCriteriaTypeById(Long id);
     CriteriaType updateCriteriaType(CriteriaType criteriaType, Long id);
-    void deleteCriteriaType(CriteriaType criteriaType);
+    void deleteCriteriaType(Long id);
 }

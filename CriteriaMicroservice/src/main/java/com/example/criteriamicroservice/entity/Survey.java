@@ -1,5 +1,6 @@
 package com.example.criteriamicroservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,11 +23,11 @@ public class Survey {
 
     @Enumerated(EnumType.STRING)
     private SurveyStatus status; // Статус опросника: ACTIVE, IN_PROGRESS, COMPLETED
-
+    @JsonIgnore
     @JsonManagedReference
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SurveyQuestion> questions;
-
+    @JsonIgnore
     @JsonManagedReference
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SurveyResult> results;

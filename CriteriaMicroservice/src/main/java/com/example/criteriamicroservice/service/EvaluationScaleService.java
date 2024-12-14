@@ -10,5 +10,5 @@ public interface EvaluationScaleService {
     List<EvaluationScale> fetchEvaluationScaleList();
     EvaluationScale findEvaluationScaleById(Long id);
     EvaluationScale updateEvaluationScale(EvaluationScale evaluationScale, Long id);
-    void deleteEvaluationScale(EvaluationScale evaluationScale);
+    void deleteEvaluationScale(Long id);
 }

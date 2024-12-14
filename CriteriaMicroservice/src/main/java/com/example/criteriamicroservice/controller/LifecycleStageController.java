@@ -11,7 +11,7 @@ import java.util.List;
 public class LifecycleStageController {
     @Autowired
     private LifecycleStageService lifecycleStageService;
-    @PostMapping("/lifecycleStages")
+    @PostMapping(value = "/lifecycleStages")
     public LifecycleStage saveLifecycleStage(@RequestBody LifecycleStage lifecycleStage)
     {
         return lifecycleStageService.saveLifecycleStage(lifecycleStage);
@@ -28,11 +28,10 @@ public class LifecycleStageController {
         return lifecycleStageService.updateLifecycleStage(lifecycleStage, ID);
     }
     // Delete operation
-    @DeleteMapping("/lifecycleStages")
+    @DeleteMapping("/lifecycleStages/{id}")
     public String deleteLifecycleStage(@PathVariable("id") Long ID)
     {
-        LifecycleStage lifecycleStage = lifecycleStageService.findLifecycleStageById(ID);
-        lifecycleStageService.deleteLifecycleStage(lifecycleStage);
+        lifecycleStageService.deleteLifecycleStage(ID);
         return "Deleted Successfully";
     }
 }

@@ -3,6 +3,7 @@ package com.example.criteriamicroservice.controller;
 import com.example.criteriamicroservice.entity.EvaluationParameter;
 import com.example.criteriamicroservice.service.EvaluationParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 public class EvaluationParameterController {
     @Autowired
     private EvaluationParameterService evaluationParameterService;
-    @PostMapping("/evaluationParameters")
+    @PostMapping(value ="/evaluationParameters")
     public EvaluationParameter saveEvaluationParameter(@RequestBody EvaluationParameter evaluationParameter)
     {
         return evaluationParameterService.saveEvaluationParameter(evaluationParameter);
@@ -32,11 +33,10 @@ public class EvaluationParameterController {
         return evaluationParameterService.updateEvaluationParameter(evaluationParameter, ID);
     }
     // Delete operation
-    @DeleteMapping("/evaluationParameters")
+    @DeleteMapping("/evaluationParameters/{id}")
     public String deleteEvaluationParameter(@PathVariable("id") Long ID)
     {
-        EvaluationParameter evaluationParameter = evaluationParameterService.findEvaluationParameterById(ID);
-        evaluationParameterService.deleteEvaluationParameter(evaluationParameter);
+        evaluationParameterService.deleteEvaluationParameter(ID);
         return "Deleted Successfully";
     }
 }

@@ -60,8 +60,8 @@ public class CriteriaServiceImpl implements CriteriaService {
     }
 
     @Override
-    public void deleteCriteria(Criteria criteria) {
-        criteriaRepository.delete(criteria);
+    public void deleteCriteria(Long id) {
+        criteriaRepository.deleteById(id);
     }
     @Override
     public void uploadCriteriaFromCsv(InputStream csvInputStream) {

@@ -42,7 +42,7 @@ public class LifecycleStageServiceImpl implements LifecycleStageService {
     }
 
     @Override
-    public void deleteLifecycleStage(LifecycleStage lifecycleStage) {
-        lifecycleStageRepository.delete(lifecycleStage);
+    public void deleteLifecycleStage(Long id) {
+        lifecycleStageRepository.deleteById(id);
     }
 }

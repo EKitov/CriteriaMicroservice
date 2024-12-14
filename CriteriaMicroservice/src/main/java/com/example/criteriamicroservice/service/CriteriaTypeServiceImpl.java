@@ -41,7 +41,7 @@ public class CriteriaTypeServiceImpl implements CriteriaTypeService{
     }
 
     @Override
-    public void deleteCriteriaType(CriteriaType criteriaType) {
-        criteriaTypeRepository.delete(criteriaType);
+    public void deleteCriteriaType(Long id) {
+        criteriaTypeRepository.deleteById(id);
     }
 }

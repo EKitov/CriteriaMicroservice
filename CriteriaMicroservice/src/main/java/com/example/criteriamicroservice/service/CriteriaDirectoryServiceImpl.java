@@ -115,8 +115,8 @@ public class CriteriaDirectoryServiceImpl implements CriteriaDirectoryService {
     }
 
     @Override
-    public void deleteCriteriaDirectory(CriteriaDirectory criteriaDirectory) {
-        criteriaDirectoryRepository.delete(criteriaDirectory);
+    public void deleteCriteriaDirectory(Long id) {
+        criteriaDirectoryRepository.deleteById(id);
     }
     @Override
     public void loadFromCsv(MultipartFile file) throws Exception {
